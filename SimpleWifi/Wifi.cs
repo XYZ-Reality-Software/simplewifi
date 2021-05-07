@@ -34,10 +34,9 @@ namespace SimpleWifi
 			foreach (var networkInterface in _client.Interfaces)
 			{
 				networkInterface.WlanNotification -= inte_WlanNotification;
-				_client.OnQuit();
-				_client = null;
 			}
-
+			_client.OnQuit();
+			_client = null;
 		}
 		/// <summary>
 		/// Returns a list over all available access points
