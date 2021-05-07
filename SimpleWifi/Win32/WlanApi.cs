@@ -92,9 +92,18 @@ namespace SimpleWifi.Win32
 			try
 			{
 				WlanInterop.WlanCloseHandle(clientHandle, IntPtr.Zero);
+				WlanInterop.UnloadImportedDll("wlanapi.dll");
 			}
 			catch
-			{ }
+			{
+				Console.WriteLine("ERROR FREEING WLAN CLIENT");
+			}
+		}
+
+		public void OnQuit()
+		{
+			WlanInterop.WlanCloseHandle(clientHandle, IntPtr.Zero);
+			WlanInterop.UnloadImportedDll("wlanapi.dll");
 		}
 
 		// Called from interop

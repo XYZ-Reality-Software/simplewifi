@@ -176,6 +176,20 @@ namespace SimpleWifi.Win32.Interop
 			[Out] out IntPtr wlanBssList
 		);
 
+		[DllImport("kernel32", SetLastError = true)]
+		private static extern bool FreeLibrary(IntPtr hModule);
+
+		public static void UnloadImportedDll(string DllPath)
+		{
+			foreach (ProcessModule mod in Process.GetCurrentProcess().Modules)
+			{
+				if (mod.FileName == DllPath)
+				{
+					FreeLibrary(mod.BaseAddress);
+				}
+			}
+		}
+
 		/*
 		 DWORD WlanSetProfileEapUserData(
 			_In_        HANDLE hClientHandle,
