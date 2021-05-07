@@ -31,10 +31,13 @@ namespace SimpleWifi
 		}
 		public void OnQuit()
 		{
-			foreach (var inte in _client.Interfaces)
-				inte.WlanNotification -= inte_WlanNotification;
-			_client.OnQuit();
-			_client = null;
+			foreach (var networkInterface in _client.Interfaces)
+			{
+				networkInterface.WlanNotification -= inte_WlanNotification;
+				_client.OnQuit();
+				_client = null;
+			}
+
 		}
 		/// <summary>
 		/// Returns a list over all available access points
