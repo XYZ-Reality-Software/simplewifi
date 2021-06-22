@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using SimpleWifi.Win32.Interop;
+using System.Threading.Tasks;
 
 namespace SimpleWifi
 {
@@ -138,24 +139,18 @@ namespace SimpleWifi
 		/// <summary>
 		/// Connect asynchronous to the access point.
 		/// </summary>
-		public void ConnectAsync(AuthRequest request, bool overwriteProfile = false, Action<bool> onConnectComplete = null)
+		public async Task<bool> ConnectAsync(AuthRequest request, bool overwriteProfile = false)
 		{
-			// TODO: Refactor -> Use async connect in wlaninterface.
-			ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
-				bool success = false;
-
-				try
-				{
-					success = Connect(request, overwriteProfile);
-				}
-				catch (Win32Exception)
-				{					
-					success = false;
-				}
-
-				if (onConnectComplete != null)
-					onConnectComplete(success);
-			}));
+			bool success = false;
+			try
+			{
+				success = Connect(request, overwriteProfile);
+			}
+			catch (Win32Exception)
+			{
+				success = false;
+			}
+			return success;
 		}
 				
 		public string GetProfileXML()
