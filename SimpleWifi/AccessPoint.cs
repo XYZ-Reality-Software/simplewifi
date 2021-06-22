@@ -139,7 +139,7 @@ namespace SimpleWifi
 		/// <summary>
 		/// Connect asynchronous to the access point.
 		/// </summary>
-		public async Task<bool> ConnectAsync(AuthRequest request, bool overwriteProfile = false, Action<bool> onConnectComplete = null)
+		public async Task<bool> ConnectAsync(AuthRequest request, bool overwriteProfile = false)
 		{
 			bool success = false;
 			try
